@@ -1,0 +1,10 @@
+User-Agent: *
+Disallow: /admin/
+
+Host: http://www.rt-im.ru/
+Sitemap: http://www.rt-im.ru/sitemap.xml
+
+# bad robots:
+User-agent: AhrefsBot
+Disallow: /
+Add Comment

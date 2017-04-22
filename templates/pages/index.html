@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block description %}
+	Ваш персональный веб-программист воплотит ваши идеи в жизнь. Создание сайтов-визиток и персональных страниц.
+	Разумные расценки и контроль за исполнением.
+{% endblock %}
+
+{% block keywords %}
+	веб-программист, создание сайтов, создать сайт-визитку, создать персональный сайт, веб-программист django, требуется веб-программист,
+	программист python
+{% endblock %}
+
+{% block author %}
+	Тимофеева Маргарита
+{% endblock %}
+
+{% block title %}
+	Веб-программист
+{% endblock title%}
+
+{% block content %}
+        {% load staticfiles %}
+
+        <!--========== SLIDER ==========-->
+        <div class="promo-block parallax-window" data-parallax="scroll" data-image-src="{{ user.photo.url }}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="promo-block-divider">
+                            <h1 class="promo-block-title">{{ user.name }}</h1>
+                        </div>
+                        <p class="promo-block-text">{{ user.position }} <a href="https://github.com/RitaTim" class="social-icons"><i class="icon-social-github"></i></a></p>
+                    </div>
+                </div>
+                <!--// end row -->
+            </div>
+        </div>
+        <!--========== SLIDER ==========-->
+
+        <!--========== PAGE LAYOUT ==========-->
+        <!-- About -->
+        <div id="about">
+            <div class="container content-lg">
+                <div class="row">
+                    <div class="col-sm-3 sm-margin-b-30">
+                        <div class="text-right sm-text-left">
+                            <h2 class="margin-b-0">Технологии</h2>
+                            <p>Что я умею</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <div class="margin-b-60">
+                            {{ user.about | safe }}
+                        </div>
+
+                        <!-- Progress Box -->
+                        {% for skill in skills %}
+                            <div class="progress-box">
+                                <h5>{{ skill.title}} <span class="color-heading pull-right">{{ skill.percent }}%</span></h5>
+                                <div class="progress">
+                                    <div class="progress-bar bg-color-base" role="progressbar" data-width="{{ skill.percent }}"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- End Progress Box -->
+                    </div>
+                </div>
+                <!--// end row -->
+            </div>
+        </div>
+        <!-- End About -->
+
+        <!-- Experience -->
+        <div id="experience">
+            <div class="bg-color-sky-light" data-auto-height="true">
+                <div class="container content-lg">
+                    <div class="row">
+                        <div class="col-sm-3 sm-margin-b-30">
+                            <div class="text-right sm-text-left">
+                                <h2 class="margin-b-0">Опыт работы</h2>
+                                <p>Где меня научили</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-sm-offset-1">
+                            <div class="row row-space-2 margin-b-4">
+                                {% for work in works %}
+                                    <div class="col-md-6 md-margin-b-6">
+                                        <div class="service {% if work.id|divisibleby:2 %}bg-color-base wow zoomIn{% endif %}" data-height="height">
+                                            <div class="service-overlay">
+                                                {{ work.technologies | safe }}
+                                            </div>
+                                            <div class="service-info">
+                                                <h3 class="{% if work.id|divisibleby:2 %}color-white{% endif %}">{{ work.organization }}</h3>
+                                                <h5>{{ work.working_time }}</h5>
+                                                <p class="{% if work.id|divisibleby:2 %}color-white{% endif %} margin-b-5">{{ work.duties | safe}}</p>
+                                            </div>
+                                            <a href="{{ work.organization.link }}" class="content-wrapper-link"></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!--// end row -->
+                        </div>
+                    </div>
+                    <!--// end row -->
+                </div>
+            </div>
+        </div>
+        <!-- End Experience -->
+
+        <!-- Work -->
+        <div id="work">
+            <div class="container content-lg">
+                <div class="row">
+                    <div class="col-sm-3 sm-margin-b-30">
+                        <div class="text-right sm-text-left">
+                            <h2 class="margin-b-0">Партфолио</h2>
+                            <p>Мои работы</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <!-- Masonry Grid -->
+                        <div class="masonry-grid row row-space-2">
+                            <div class="masonry-grid-sizer col-xs-6 col-sm-6 col-md-1"></div>
+
+                            {% for project in projects %}
+                                <div class="masonry-grid-item col-xs-12 col-sm-6 col-md-{% if forloop.first %}8{% else %}4{% endif %} margin-b-4">
+                                    <!-- Work -->
+                                    <div class="work work-popup-trigger">
+                                        <div class="work-overlay">
+                                            <img class="full-width img-responsive" src="{{ project.img.url }}" alt="Portfolio Image">
+                                        </div>
+                                        <div class="work-popup-overlay">
+                                            <div class="work-popup-content">
+                                                <a href="javascript:void(0);" class="work-popup-close">X</a>
+                                                <div class="margin-b-30">
+                                                    <h3 class="margin-b-5">{{ project.title }}</h3>
+                                                    <span><a href="{{ project.link }}">{{ project.link }}</a></span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-8 work-popup-content-divider sm-margin-b-20">
+                                                        <div class="margin-t-10 sm-margin-t-0">
+                                                            {{ project.duties | safe }}
+                                                            <p class="margin-b-5">
+                                                                <strong>Заказчик: </strong>
+                                                                <a class="work-popup-tag-link" href="{{ project.customer.link }}">{{ project.customer }}</a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="margin-t-10 sm-margin-t-0 margin-inner-b-5">
+                                                            {{ project.technologies | safe }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Work -->
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                        <!-- End Masonry Grid -->
+                    </div>
+                </div>
+                <!--// end row -->
+            </div>
+        </div>
+        <!-- End Work -->
+
+        <!-- Contact -->
+        <div id="contact">
+            <div class="bg-color-sky-light">
+                <div class="container content-lg">
+                    <div class="row">
+                        <div class="col-sm-3 sm-margin-b-30">
+                            <div class="text-right sm-text-left">
+                                <h2 class="margin-b-0">Контакты</h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-sm-offset-1">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 md-margin-b-30">
+                                    <h5>Адрес</h5>
+                                    <a href="#">{{ user.address }}</a>
+                                </div>
+                                <div class="col-md-3 col-xs-6 md-margin-b-30">
+                                    <h5>Телефон</h5>
+                                    <a href="#">{{ user.phone }}</a>
+                                </div>
+                                <div class="col-md-3 col-xs-6">
+                                    <h5>E-mail</h5>
+                                    <a href="mailto:margaritachka@gmail.com">{{ user.email }}</a>
+                                </div>
+                                <div class="col-md-3 col-xs-6">
+                                    <h5>Сайт</h5>
+                                    <a href="{{ user.site }}">{{ user.site }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// end row -->
+                </div>
+            </div>
+        </div>
+        <!-- End Contact -->
+        <!--========== END PAGE LAYOUT ==========-->
+
+{% endblock content %}

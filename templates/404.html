@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+	404 ошибка
+{% endblock title%}
+
+{% block menu %}
+    <li class="nav-item"><a class="nav-item-child nav-item-hover" href="/">Главная</a></li>
+{% endblock %}
+
+{% block content %}
+	{% load staticfiles %}
+    <!--========== SLIDER ==========-->
+    <div class="promo-block parallax-window" data-parallax="scroll" data-image-src="{% static 'img/error.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="promo-block-divider">
+                        <h1 class="promo-block-title">404 ОШИБКА</h1>
+                    </div>
+                    <p class="promo-block-text">
+                        Страницы по указанному адресу не существует
+                    </p>
+                </div>
+            </div>
+            <!--// end row -->
+        </div>
+    </div>
+    <!--========== SLIDER ==========-->
+{% endblock content %}
