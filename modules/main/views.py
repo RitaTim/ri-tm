@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 
 from .models import Employee, Skill, Experience, Project
+
 
 class HomePageView(TemplateView):
     template_name = "pages/index.html"
@@ -22,8 +24,7 @@ home_page = HomePageView.as_view()
 
 
 class RobotsPageView(TemplateView):
-    template_name='robots.txt'
-
+    template_name = 'robots.txt'
 
 robots_page = RobotsPageView.as_view(content_type='text/plain')
 
@@ -41,7 +42,6 @@ class ErrorPageView(TemplateView):
         return response
 
 
-
 class Page404View(ErrorPageView):
     template_name = "404.html"
     status_code = 404
@@ -53,4 +53,14 @@ class Page500View(ErrorPageView):
     template_name = "500.html"
     status_code = 500
 
+
 page_500 = Page500View.as_view()
+
+
+def load_services(request):
+    services_file = open("static/files/services.docx", "rb")
+    response = HttpResponse(content=services_file)
+    response['Content-Type'] = 'application/docx'
+    response['Content-Disposition'] = 'attachment; filename="{}.docx"'\
+                                      .format('services')
+    return response
